@@ -1,14 +1,13 @@
 import { Container, ModalHeader, Table } from "reactstrap";
-import { selectAllPrescriptions } from "./prescriptionsSlice";
+import { selectAllPrescriptions, selectPrescriptionById } from "./prescriptionsSlice";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-
 
 const PrescriptionsTable = () => {
     const navigate = useNavigate();
 
-    const handleRowClick = ({ prescription }) => {
-       navigate(`/prescriptions/${prescription.id}`);
+    const handleRowClick = (prescriptionId) => {
+       navigate(`/prescriptions/${prescriptionId}`);
     };
 
     const prescriptions = selectAllPrescriptions();
@@ -23,7 +22,7 @@ const PrescriptionsTable = () => {
           </thead>
           <tbody>
             {prescriptions.map((prescription) => (
-              <tr key={prescription.id} onClick={() => handleRowClick({prescription})}>
+              <tr key={prescription.id} onClick={() => handleRowClick(prescription.id)}>
                 <td>{prescription.id}</td>
                 <td>{prescription.name + " " + prescription.strength}</td>
               </tr>

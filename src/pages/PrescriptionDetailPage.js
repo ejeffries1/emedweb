@@ -1,13 +1,11 @@
-import { Card, CardTitle, Container } from "reactstrap";
-//import PrescriptionCard from "../features/prescriptions/PrescriptionCard";
+import { Card, CardTitle, Container, Col } from "reactstrap";
+import PrescriptionCard from "../features/prescriptions/PrescriptionCard";
+import { selectPrescriptionById } from "../features/prescriptions/prescriptionsSlice";
+import { useParams } from "react-router-dom";
 
 
-const PrescriptionDetailPage = ({ prescription }) => {
-    return (
-        <Card>
-            <h2>{prescription.name}</h2>
-        </Card>
-    )
+const PrescriptionDetailPage = () => {
+    return <PrescriptionCard />
 };
 
 export default PrescriptionDetailPage;
