@@ -1,92 +1,74 @@
+import { Form, Formik, Field } from "formik";
 import { useState } from "react";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Form, FormGroup, Label, Row, Col, Input } from "reactstrap";
-import { Formik } from 'formik';
+import { useDispatch } from "react-redux";
+import { FormGroup, Label, Modal, ModalHeader, ModalBody, Button } from "reactstrap";
+import { postPrescription } from "./prescriptionsSlice";
+
 
 const PrescriptionModal = () => {
-    const [modal, setModal] = useState(false);
+    const [modalOpen=false, setModalOpen] = useState();
+    const dispatch = useDispatch();
 
-    const toggle = () => setModal(!modal);
-
-    const handleSubmit = (values, { resetForm }) => {
-        console.log('form values:', values);
-        console.log('in JSON format:', JSON.stringify(values));
-        resetForm();
+    const handleSubmit = (values) => {
+        const prescription = {
+            name: values.name,
+            strength: values.strength,
+            quantity: values.quantity,
+            refills: values.refills,
+            directions: values.directions,
+            date: new Date(Date.now()).toISOString
+        }
+        console.log(prescription);
+        dispatch(postPrescription(prescription));
+        setModalOpen = false
     };
 
-    return (
-        <Formik
-            initialValues={{
-                medication: '',
-                strength: '',
-                quantity: '',
-                directions: '',
-                refills: '',
-            }}
-            onSubmit={handleSubmit}
-            >
+    return(
         <div>
-          <Button color="primary" className="float-right" onClick={toggle}>
-            Add Prescription
-          </Button>
-          <Modal isOpen={modal} toggle={toggle}>
-            <ModalHeader toggle={toggle}>Modal title</ModalHeader>
+        <Button outline onClick={() => setModalOpen(true)}>
+        <i className="fa fa-pencil fa-lg"/>Add Prescription
+        </Button>
+        <Modal isOpen={modalOpen}>
+            <ModalHeader toggle={() => setModalOpen(false)}>Add Prescription</ModalHeader>
             <ModalBody>
-            <Form>
-                <Row>
-                    <Col>
+                <Formik
+                    initialValues={{
+                        name: '',
+                        strength: '',
+                        quantity: Number,
+                        refills: Number,
+                        directions: ''
+                    }}
+                onSubmit={handleSubmit}
+                >
+                    <Form>
                         <FormGroup>
-                            <Label for="medication">Medication Name:</Label>
-                            <Input id="medication" name="medication"/>
-                        </FormGroup>
-                        <FormGroup>
-                            <label for="strength">Strength:</label>
-                            <Input id="strength"/>
-                        </FormGroup>
-                        <FormGroup>
-                            <label for="quantity">Quantity</label>
-                            <Input id="quantity" type="select" name="select">
-                                <option>10</option>
-                                <option>20</option>
-                                <option>30</option>
-                                <option>40</option>
-                                <option>50</option>
-                                <option>60</option>
-                            </Input>
-                        </FormGroup>
-                        <FormGroup>
-                            <label for="directions">Frequency</label>
-                            <Input id="directions" type="select">
-                                <option>QD</option>
-                                <option>BID</option>
-                                <option>TID</option>
-                                <option>QD PC</option>
-                                <option>QD AC</option>
-                            </Input>
-                        </FormGroup>
-                        <FormGroup>
-                            <label for="refills">Refills</label>
-                            <Input id="refills" type="select">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                            </Input>
-                        </FormGroup>
-                    </Col>
-                </Row>
+                    <Label htmlFor="name">Medication: </Label>
+                    <Field name="name" className='form-control'/>
+                </FormGroup>
+                <FormGroup>
+                    <Label htmlFor="strength">Strength: </Label>
+                    <Field name="strength" className='form-control'/>
+                </FormGroup>
+                <FormGroup>
+                    <Label htmlFor="quantity">Quantity: </Label>
+                    <Field name="quantity" className='form-control'/>
+                </FormGroup>
+                <FormGroup>
+                    <Label htmlFor="refills">Refills: </Label>
+                    <Field name="refills" className='form-control'/>
+                </FormGroup>
+                <FormGroup>
+                    <Label htmlFor="directions">Directions: </Label>
+                    <Field name="directions" className='form-control'/>
+                </FormGroup>
+                <Button type='submit' color='primary'>Submit Prescription</Button>
             </Form>
-            </ModalBody>
-            <ModalFooter>
-              <Button color="primary" onClick={toggle}>
-                Submit Prescription
-              </Button>{' '}
-              <Button color="secondary" onClick={toggle}>
-                Cancel
-              </Button>
-            </ModalFooter>
-          </Modal>
-        </div>
         </Formik>
-      );
-    };
+        </ModalBody>
+        </Modal>
+    </div>
+    )
+};
 
 export default PrescriptionModal;

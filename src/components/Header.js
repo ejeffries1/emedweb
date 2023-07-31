@@ -1,4 +1,5 @@
 import { Nav, NavItem, NavLink, Navbar, NavbarBrand } from "reactstrap";
+import UserLoginForm from "../features/user/UserLoginForm";
 
 
 const Header = () => {
@@ -20,6 +21,7 @@ const Header = () => {
             <NavItem> 
                 </NavItem>        
             </Nav>
+            <UserLoginForm />
         </Navbar>
     )
 };

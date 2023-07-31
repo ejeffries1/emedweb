@@ -1,7 +1,8 @@
 import { Card, CardTitle, Container, Col } from "reactstrap";
 import PrescriptionCard from "../features/prescriptions/PrescriptionCard";
-import { selectPrescriptionById } from "../features/prescriptions/prescriptionsSlice";
-import { useParams } from "react-router-dom";
+import Error from "../components/Error";
+import Loading from "../components/Loading";
+
 
 
 const PrescriptionDetailPage = () => {

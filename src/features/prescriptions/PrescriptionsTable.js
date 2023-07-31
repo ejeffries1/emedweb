@@ -1,6 +1,6 @@
 import { Container, ModalHeader, Table } from "reactstrap";
-import { selectAllPrescriptions, selectPrescriptionById } from "./prescriptionsSlice";
-import { Link } from "react-router-dom";
+import { selectAllPrescriptions } from "./prescriptionsSlice";
+import { useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
 
 const PrescriptionsTable = () => {
@@ -10,7 +10,8 @@ const PrescriptionsTable = () => {
        navigate(`/prescriptions/${prescriptionId}`);
     };
 
-    const prescriptions = selectAllPrescriptions();
+    const prescriptions = useSelector(selectAllPrescriptions);
+    console.log('prescriptions:', prescriptions);
     return (
         <Container fluid>
         <Table className="table table-hover row-clickable">

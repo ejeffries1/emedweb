@@ -1,10 +1,11 @@
 import { Card, CardBody, CardHeader, Col, Container } from "reactstrap";
 import { selectPrescriptionById } from "./prescriptionsSlice";
 import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const PrescriptionCard = () => {
     const { prescriptionId } = useParams();
-    const prescription = selectPrescriptionById(prescriptionId);
+    const prescription = useSelector(selectPrescriptionById(prescriptionId));
 
     return (
         <Container fluid style={{padding: 20, display: "flex", textAlign: "left"}}>
